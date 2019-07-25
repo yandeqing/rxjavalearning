@@ -1,17 +1,10 @@
 package com.rxjava.scene1;
 
-import com.rxjava.scene1.consumer.ErrorConsume;
-import com.rxjava.scene1.observer.SingleReqObserver;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.functions.Consumer;
-import io.reactivex.plugins.RxJavaPlugins;
 
 /**
  * 版权:上海屋聚 版权所有

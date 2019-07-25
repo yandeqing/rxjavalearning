@@ -24,7 +24,7 @@ public class MultiAsyReqExample {
 
     private void request() {
         Observable
-                .create(emitter -> {
+                .<Integer>create(emitter -> {
                     emitter.onNext(1);
                 })
                 .flatMap(this::updateUserInfo)
@@ -32,7 +32,7 @@ public class MultiAsyReqExample {
                 .subscribe(this::updateUI, this::showError);
     }
 
-    private Observable<Integer> updateUserInfo(Object o) {
+    private Observable<Integer> updateUserInfo(Integer o) {
         return Observable.create(emitter -> {
             int a = 1;
             System.out.println("updateUserInfo = [" + o + "]");
@@ -40,12 +40,12 @@ public class MultiAsyReqExample {
         });
     }
 
-    private ObservableSource<Boolean> uploadImageTask(Integer o) {
+    private ObservableSource<Integer> uploadImageTask(Integer o) {
         return Observable.create(emitter -> {
             int b = 1;
             int c = 0;
             System.out.println("uploadImageTask = [" + o + "]");
-            emitter.onNext(b == 2);
+            emitter.onNext(b);
         });
     }
 
@@ -53,7 +53,7 @@ public class MultiAsyReqExample {
         System.out.println("throwable = [" + throwable + "]");
     }
 
-    private void updateUI(Boolean o) {
+    private void updateUI(Integer o) {
         System.out.println("updateUI o = [" + o + "]");
     }
 
