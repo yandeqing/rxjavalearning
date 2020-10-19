@@ -1,10 +1,13 @@
 package com.rxjava.scene4;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 
 /**
  * 版权:上海屋聚 版权所有
@@ -22,15 +25,20 @@ public class TimingpollExample {
     }
 
     private static void timer() {
-        Observable.timer(1, TimeUnit.SECONDS, Schedulers.trampoline())
+        Observable.interval(3, TimeUnit.SECONDS, Schedulers.trampoline())
                 .subscribe(timer -> System.out.println("timer = " + timer));
     }
 
     private static void interval() {
-        AtomicLong lastTick = new AtomicLong(0L);
+        AtomicInteger lastTick = new AtomicInteger(5);
         Observable.interval(1, TimeUnit.SECONDS, Schedulers.trampoline())
-                .map(tick -> lastTick.getAndAdd(2))
-                .takeUntil(aLong -> aLong == 10)
+                .map(tick -> lastTick.getAndDecrement())
+                .takeUntil(new Predicate<Integer>() {
+                    @Override
+                    public boolean test(Integer integer) throws Throwable {
+                        return integer==0;
+                    }
+                })
                 .subscribe(tick -> System.out.println("tick = " + tick));
     }
 

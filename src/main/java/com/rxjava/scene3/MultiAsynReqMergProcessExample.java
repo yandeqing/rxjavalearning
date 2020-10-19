@@ -1,12 +1,11 @@
 package com.rxjava.scene3;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.BiFunction;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * 版权:上海屋聚 版权所有
@@ -24,23 +23,35 @@ public class MultiAsynReqMergProcessExample {
     }
 
     private static void merge() {
-        Observable o1 = Observable.just(1).map(new Function<Integer, Object>() {
+        Observable o1 = Observable.just(1,8).map(new Function<Integer, Object>() {
             @Override
             public Object apply(Integer integer) throws Exception {
-                return integer*2+100;
+                return integer * 2 + 1;
             }
         }).subscribeOn(Schedulers.trampoline());
-        Observable o2 = Observable.just(1).map(new Function<Integer, Object>() {
+        Observable o2 = Observable.just(3, 6).map(new Function<Integer, Object>() {
             @Override
             public Object apply(Integer integer) throws Exception {
-                return integer*4+20;
+                return integer * 4 + 1;
             }
         }).subscribeOn(Schedulers.trampoline());
-        Observable.zip(o1, o2, (BiFunction<Integer, Integer, Integer>) (o, o21) -> o + o21).subscribe(o -> {
-            System.out.println("o =  " + o + " ");
-        }, throwable -> {
-            System.out.println("throwable = [" + throwable + "]");
+        Observable.zip(o1, o2, new BiFunction<Integer, Integer, String>() {
+            @Override
+            public String apply(Integer o, Integer o2) throws Throwable {
+                return o + "," + o2;
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String o) throws Throwable {
+                System.out.println("o =  " + o + " ");
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Throwable {
+
+            }
         });
+
     }
 
 

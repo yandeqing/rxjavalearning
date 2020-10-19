@@ -3,8 +3,8 @@ package com.rxjava.scene1;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 
 /**
  * 版权:上海屋聚 版权所有
