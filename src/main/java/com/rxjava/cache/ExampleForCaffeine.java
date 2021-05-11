@@ -34,8 +34,7 @@ class ExampleForCaffeine {
         String key = "A";
         DataObject dataObject = cache.getIfPresent(key);
         System.out.println("dataObject = [" + dataObject + "]");
-        dataObject = cache
-                .get(key, k -> DataObject.get("Data for A"));
+        dataObject = cache.get(key, k -> DataObject.get("Data for A"));
         System.out.println("dataObject = [" + dataObject + "]");
     }
 
